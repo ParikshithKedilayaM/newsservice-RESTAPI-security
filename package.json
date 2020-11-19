@@ -1,0 +1,17 @@
+{
+  "name": "pkedilay_lab6",
+  "version": "1.0.0",
+  "description": "Activity 1",
+  "main": "NewsService_API.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node NewsService_API.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "restify": "^8.5.1",
+    "restify-errors": "^8.0.2",
+    "schema-inspector": "^1.7.0"
+  }
+}
