@@ -252,7 +252,6 @@ function sanitizeUpdateTitle(data) {
 function sanitizeUpdateContent(data) {
     var sanitization = {
         type: 'object',
-        strict: true,
         properties: {
             content: { type: 'string', rules: ['trim', 'title'] }
         }
@@ -260,6 +259,7 @@ function sanitizeUpdateContent(data) {
 
     var validation = {
         type: 'object',
+        strict: true,
         properties: {
             content: { type: 'string', minLength: 1 }
         }
