@@ -4,8 +4,8 @@
   "description": "Activity 1",
   "main": "NewsService_API.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node NewsService_API.js"
+    "test": "node NewsService_API.js",
+    "start": "node NewsService_API_EC.js"
   },
   "author": "",
   "license": "ISC",

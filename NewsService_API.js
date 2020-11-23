@@ -4,8 +4,8 @@ const restify = require('restify'),
     { NotFoundError } = require('restify-errors');
 
 const server = restify.createServer({
-        key: fs.readFileSync('./ssl/key.pem'),
-        cert: fs.readFileSync('./ssl/cert.pem')
+        key: fs.readFileSync('./ssl/privatekey.pem'),
+        cert: fs.readFileSync('./ssl/certificate.pem')
     }),
     newsService = new NewsService();
 
