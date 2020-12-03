@@ -1,7 +1,7 @@
 const restify = require('restify'),
     fs = require('fs'),
     NewsService = require('./newsModel/NewsService'),
-    { NotFoundError } = require('restify-errors');
+    { NotFoundError, BadRequestError } = require('restify-errors');
 
 const server = restify.createServer({
         key: fs.readFileSync('./ssl/privatekey.pem'),
@@ -145,7 +145,7 @@ function checkQueryParams(query) {
  */
 function bodyCheck(req, res, next) {
     if (!req.body) {
-        next(new Error('Body missing in the request'));
+        next(new BadRequestError('Body missing in the request'));
     } else {
         next();
     }
@@ -160,7 +160,7 @@ function bodyCheck(req, res, next) {
  */
 function idCheck(req, res, next) {
     if (!req.params.id) {
-        next(new Error(`Unable to read story id`));
+        next(new BadRequestError(`Unable to read story id`));
     } else {
         next();
     }

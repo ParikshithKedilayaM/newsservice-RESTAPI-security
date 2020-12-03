@@ -1,7 +1,7 @@
 const restify = require('restify'),
     fs = require('fs'),
     NewsService = require('./newsModel/NewsService'),
-    { NotFoundError } = require('restify-errors'),
+    { NotFoundError, BadRequestError } = require('restify-errors'),
     inspector = require('schema-inspector');;
 
 const server = restify.createServer({
@@ -63,7 +63,7 @@ server.get(NEWS_ENDPOINT + ID_PATH_PARAM, idCheck, (req, res, next) => {
 server.post(NEWS_ENDPOINT, bodyCheck, (req, res, next) => {
     try {
         if (!sanitizePostData(req.body)) {
-            throw new Error('Data Corrupt');
+            throw new BadRequestError('Data Corrupt');
         }
         var { title, content, author, isPublic, date } = req.body;
         var storyId = newsService.addStory(title, content, author, isPublic, date);
@@ -90,7 +90,7 @@ server.put(NEWS_ENDPOINT + ID_PATH_PARAM, idCheck, bodyCheck,
         if (req.body.title) {
             try {
                 if (!sanitizeUpdateTitle(req.body)) {
-                    throw new Error('Data Corrupt');
+                    throw new BadRequestError('Data Corrupt');
                 }
                 newsService.updateTitle(req.params.id, req.body.title);
                 res.send(204);
@@ -109,7 +109,7 @@ server.put(NEWS_ENDPOINT + ID_PATH_PARAM, idCheck, bodyCheck,
         if (req.body.content) {
             try {
                 if (!sanitizeUpdateContent(req.body)) {
-                    throw new Error('Data Corrupt');
+                    throw new BadRequestError('Data Corrupt');
                 }
                 newsService.updateContent(req.params.id, req.body.content);
                 res.send(204);
@@ -155,7 +155,7 @@ function checkQueryParams(query) {
  */
 function bodyCheck(req, res, next) {
     if (!req.body) {
-        next(new Error('Body missing in the request'));
+        next(new BadRequestError('Body missing in the request'));
     } else {
         next();
     }
@@ -170,7 +170,7 @@ function bodyCheck(req, res, next) {
  */
 function idCheck(req, res, next) {
     if (!req.params.id) {
-        next(new Error(`Unable to read story id`));
+        next(new BadRequestError(`Unable to read story id`));
     } else {
         next();
     }
