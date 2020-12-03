@@ -26,9 +26,9 @@ Open terminal in the project root folder and run the following commands
     1. Open Postman and import NewsService_test.json given.
     2. Run the server (See previous section)
     3. Open Runner (Button next to Import)
-    4. Select NewsService_test_L6 
-    5. Click on 'Run NewsService_test_L6'
-    6. There are 14 test cases (4 additional than asked), all should pass.
+    4. Select NewsService_test
+    5. Click on 'Run NewsService_test'
+    6. There are 11 test cases, all should pass for EC, sanitization test will fail without extra credit.
     7. Alternatively you can run each test case individually, but the sequence of test cases matters, such as create to run before all tests.
 
 

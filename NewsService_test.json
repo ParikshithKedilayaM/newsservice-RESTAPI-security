@@ -1,0 +1,491 @@
+{
+	"info": {
+		"_postman_id": "1a566a04-a14b-483d-bfe1-4aaf6f6735d1",
+		"name": "NewsService_test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Story",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e2fca073-9e0d-4839-a801-26aa5755ebe8",
+						"exec": [
+							"pm.test('Created Story', () => {\r",
+							"   pm.response.to.have.status(201);\r",
+							"   var resp = JSON.parse(pm.response.json());\r",
+							"   pm.collectionVariables.set('id', resp.storyId);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\" : \"New Title\",\r\n    \"author\" : \"New Author\",\r\n    \"content\" : \"New Content\",\r\n    \"date\" : \"10/31/2020\",\r\n    \"isPublic\" : true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:3000/stories",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Content",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "13918a5b-4a6b-4533-b17b-60ddfa71fa68",
+						"exec": [
+							"pm.test(\"Updated Content\", () => {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\": \"Updated Content\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:3000/stories/{{id}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stories",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Title",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5e4ac9dc-b7db-4e31-b3ef-e8237b8b86ad",
+						"exec": [
+							"pm.test(\"Title Updated\", () => {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Updated Title\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:3000/stories/{{id}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stories",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Title On Non-Existing Story",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "976ad58b-9bb1-454d-a524-ab56308fe376",
+						"exec": [
+							"pm.test(\"Title Updated\", () => {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Updated Title\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:3000/stories/0",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stories",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search All Filters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d4474901-f476-4722-ace7-d641144f6edc",
+						"exec": [
+							"pm.test('Search query', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3000/stories?title=Test&author=Author1&startDate=10/30/2020&endDate=10/31/2020",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stories"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "Test"
+						},
+						{
+							"key": "author",
+							"value": "Author1"
+						},
+						{
+							"key": "startDate",
+							"value": "10/30/2020"
+						},
+						{
+							"key": "endDate",
+							"value": "10/31/2020"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search No Filters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "133a0e22-9abb-4dee-b062-dbbf1da87259",
+						"exec": [
+							"pm.test('Search query', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3000/stories",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search For A Story",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8fc887f1-1152-4465-b14d-26815b827272",
+						"exec": [
+							"pm.test('Search query', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3000/stories/{{id}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stories",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search For A Non Existing Story",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "721db3fd-322c-4def-9831-1d0b86457517",
+						"exec": [
+							"pm.test('Search query', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3000/stories/0",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stories",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ea6b0519-2626-49a9-a498-d24c79fff003",
+						"exec": [
+							"pm.test('Search query with Error in parameter', () => {\r",
+							"    pm.response.to.have.status(500);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3000/stories?title=Test&author=Author1&startDate=10/30/2020&endDate=10/31/2020/5",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stories"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "Test"
+						},
+						{
+							"key": "author",
+							"value": "Author1"
+						},
+						{
+							"key": "startDate",
+							"value": "10/30/2020"
+						},
+						{
+							"key": "endDate",
+							"value": "10/31/2020/5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Story",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ea5732c5-125e-4228-89a3-853ee540abfd",
+						"exec": [
+							"pm.test(\"Story Deleted\", () => {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3000/stories/{{id}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stories",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sanitization test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f4342f71-269e-4861-b08b-f60de5f1aa0f",
+						"exec": [
+							"pm.test('Sanitization test', () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\" : \"New Title\",\r\n    \"author\" : \"New Content\",\r\n    \"content\" : \"New Content\",\r\n    \"date\" : \"10/31/2020\",\r\n    \"isPublic\" : true,\r\n    \"role\" : \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:3000/stories",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stories"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a81f0f50-269c-47e9-a20e-b85132f66e29",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "165d49e8-8198-4896-bb88-5883e57f15fa",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "fcf425ad-aeb7-40ad-9224-ffee477f453b",
+			"key": "id",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}
