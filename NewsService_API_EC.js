@@ -81,7 +81,11 @@ server.del(NEWS_ENDPOINT + ID_PATH_PARAM, idCheck, (req, res, next) => {
         res.send(204);
         return next();
     } catch (err) {
-        next(err);
+        if (err.message === NEWSSTORYNOTFOUND) {
+            return next(new NotFoundError(ERROR404));
+        } else {
+            next(err);
+        }
     }
 });
 

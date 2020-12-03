@@ -111,11 +111,14 @@ var PersistenceStore = function () {
     /**
      * Below code deletes the story for the given id.
      * If id does not exists nothing is done. 
+     * @author: pkedilay, changed logic to throw 404 error as per discussion in exam 
      */
     PersistenceStore.prototype.deleteStory = function (id) {
         let data = this.getDataFromFileAsObj();
         if (id in data[NEWS_STORIES_KEY]) {
             delete data[NEWS_STORIES_KEY][id];
+        } else {
+            throw new Error(INVALID_KEY);
         }
         this.writeToDataFile(data);
     }
